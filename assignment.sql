@@ -1,4 +1,7 @@
---CREATE DATABASE Lukas;
+/*
+CREATE DATABASE Lukas;
+*/
+
 use Lukas;
 
 /*
@@ -121,6 +124,7 @@ CREATE TABLE SCHEDULE (
 	V# int,
 	Slot# int,
 	R# int,
+	Date_of_Schedule date,
 	Oncall BIT,
  CONSTRAINT PK_Sch PRIMARY KEY(Sch#),
  CONSTRAINT FK_V_Sch FOREIGN KEY(V#) REFERENCES VET(V#) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -136,6 +140,7 @@ CREATE TABLE CALL_SCHEDULE (
 	Site# int,
 	Fromm TIME(0),
 	Too TIME(0),
+	Date_of_Call_Schedule date,
  CONSTRAINT PK_VSite PRIMARY KEY(V#, Site#),
  CONSTRAINT FK_V_VSite FOREIGN KEY(V#) REFERENCES VET(V#) ON DELETE CASCADE ON UPDATE CASCADE,
  CONSTRAINT FK_Site_VSite FOREIGN KEY(Site#) REFERENCES SITE(Site#) ON DELETE CASCADE ON UPDATE CASCADE);
@@ -270,82 +275,102 @@ INSERT INTO VS([V#],[SP#]) VALUES(8,4);
 
 
 --CLIENT data insert
-INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Blaze','Nolan','102','Dapibus Street','Town of Yarmouth','1650100273799');
-INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Ashely','Hooper','58','Nam Rd.','Zeebrugge','1659100177999');
-INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Rhona','Shepherd','51','Adipiscing Rd.','Compiano','1662121092499');
-INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Ferdinand','Oneal','132','Cursus Avenue','Heidenheim','1612112135099');
-INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Kameko','Pena','74','Euismod St.','Alto del Carmen','1664092578499');
-INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Chadwick','Ortega','95','Sapien. St.','Plainevaux','1653021115299');
-INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Davis','Flynn','140','Euismod Street','Brescia','1676071947399');
-INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Cain','Marquez','144','In Av.','Tredegar','1683012204399');
-INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Axel','Miller','33','Urna Rd.','Orsogna','1669020400199');
-INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Ramona','Munoz','88','Augue Ave','Katowice','1602122749699');
-INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Conan','Howe','139','Aliquet Av.','Kapolei','1669022610699');
-INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Keegan','Love','58','Amet Av.','Turriaco','1630080806199');
-INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Donovan','Floyd','128','Integer Road','Miami','1663011549799');
-INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Scarlett','Mcclure','27','Amet Road','Moose Jaw','1647070745699');
-INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Rylee','Mullen','46','Habitant Road','Ruisbroek','1672120518699');
-INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Montana','Fuentes','25','Dui, Rd.','Jerez de la Frontera','1685091201799');
-INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Camilla','Tillman','45','Eget, Road','Brodick','1605061184199');
-INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Perry','Walters','81','Odio. Av.','Sandy','1623102475899');
-INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Yardley','Hebert','63','Tristique Av.','Jonesboro','1642080338499');
-INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Michelle','Waters','127','Interdum. Ave','Wepion','1665061934499');
+INSERT INTO CLIENT([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Ashely','Hooper','58','Nam Rd.','Zeebrugge','1659100177999');
+INSERT INTO CLIENT([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Rhona','Shepherd','51','Adipiscing Rd.','Compiano','1662121092499');
+INSERT INTO CLIENT([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Blaze','Nolan','102','Dapibus Street','Town of Yarmouth','1650100273799');
+INSERT INTO CLIENT([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Ferdinand','Oneal','132','Cursus Avenue','Heidenheim','1612112135099');
+INSERT INTO CLIENT([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Kameko','Pena','74','Euismod St.','Alto del Carmen','1664092578499');
+INSERT INTO CLIENT([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Chadwick','Ortega','95','Sapien. St.','Plainevaux','1653021115299');
+INSERT INTO CLIENT([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Davis','Flynn','140','Euismod Street','Brescia','1676071947399');
+INSERT INTO CLIENT([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Cain','Marquez','144','In Av.','Tredegar','1683012204399');
+INSERT INTO CLIENT([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Axel','Miller','33','Urna Rd.','Orsogna','1669020400199');
+INSERT INTO CLIENT([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Ramona','Munoz','88','Augue Ave','Katowice','1602122749699');
+INSERT INTO CLIENT([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Conan','Howe','139','Aliquet Av.','Kapolei','1669022610699');
+INSERT INTO CLIENT([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Keegan','Love','58','Amet Av.','Turriaco','1630080806199');
+INSERT INTO CLIENT([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Donovan','Floyd','128','Integer Road','Miami','1663011549799');
+INSERT INTO CLIENT([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Scarlett','Mcclure','27','Amet Road','Moose Jaw','1647070745699');
+INSERT INTO CLIENT([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Rylee','Mullen','46','Habitant Road','Ruisbroek','1672120518699');
+INSERT INTO CLIENT([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Montana','Fuentes','25','Dui, Rd.','Jerez de la Frontera','1685091201799');
+INSERT INTO CLIENT([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Camilla','Tillman','45','Eget, Road','Brodick','1605061184199');
+INSERT INTO CLIENT([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Perry','Walters','81','Odio. Av.','Sandy','1623102475899');
+INSERT INTO CLIENT([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Yardley','Hebert','63','Tristique Av.','Jonesboro','1642080338499');
+INSERT INTO CLIENT([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Michelle','Waters','127','Interdum. Ave','Wepion','1665061934499');
 
 
 
 --ANIMAL data insert
-INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Cedric',1);
-INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Slade',7);
-INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Carla',16);
-INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Julie',20);
-INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Cailin',14);
-INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Gemma',14);
-INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Jakeem',14);
-INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Lillith',6);
-INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Doris',15);
-INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Gannon',1);
-INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Keane',14);
-INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Urielle',13);
-INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Ivan',6);
-INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Burke',18);
-INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Eleanor',2);
-INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Rhona',17);
-INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Bradley',2);
-INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Remedios',10);
+INSERT INTO ANIMAL([AName#],[C#]) VALUES('Cedric',1);
+INSERT INTO ANIMAL([AName#],[C#]) VALUES('Slade',7);
+INSERT INTO ANIMAL([AName#],[C#]) VALUES('Carla',16);
+INSERT INTO ANIMAL([AName#],[C#]) VALUES('Julie',20);
+INSERT INTO ANIMAL([AName#],[C#]) VALUES('Cailin',14);
+INSERT INTO ANIMAL([AName#],[C#]) VALUES('Gemma',14);
+INSERT INTO ANIMAL([AName#],[C#]) VALUES('Jakeem',14);
+INSERT INTO ANIMAL([AName#],[C#]) VALUES('Lillith',6);
+INSERT INTO ANIMAL([AName#],[C#]) VALUES('Doris',15);
+INSERT INTO ANIMAL([AName#],[C#]) VALUES('Gannon',1);
+INSERT INTO ANIMAL([AName#],[C#]) VALUES('Keane',14);
+INSERT INTO ANIMAL([AName#],[C#]) VALUES('Urielle',13);
+INSERT INTO ANIMAL([AName#],[C#]) VALUES('Ivan',6);
+INSERT INTO ANIMAL([AName#],[C#]) VALUES('Burke',18);
+INSERT INTO ANIMAL([AName#],[C#]) VALUES('Eleanor',2);
+INSERT INTO ANIMAL([AName#],[C#]) VALUES('Rhona',17);
+INSERT INTO ANIMAL([AName#],[C#]) VALUES('Bradley',2);
+INSERT INTO ANIMAL([AName#],[C#]) VALUES('Remedios',10);
 
 
 --SCHEDULE data insert
-INSERT INTO SCHEDULE([V#],[Slot#],[R#],[Oncall]) VALUES(1,1,2,0);
-INSERT INTO SCHEDULE([V#],[Slot#],[R#],[Oncall]) VALUES(1,3,1,0);
-INSERT INTO SCHEDULE([V#],[Slot#],[R#],[Oncall]) VALUES(1,5,3,0);
-INSERT INTO SCHEDULE([V#],[Slot#],[R#],[Oncall]) VALUES(1,6,2,0);
-INSERT INTO SCHEDULE([V#],[Slot#],[R#],[Oncall]) VALUES(2,2,2,0);
-INSERT INTO SCHEDULE([V#],[Slot#],[R#],[Oncall]) VALUES(2,4,1,1);
-INSERT INTO SCHEDULE([V#],[Slot#],[R#],[Oncall]) VALUES(2,7,2,1);
-INSERT INTO SCHEDULE([V#],[Slot#],[R#],[Oncall]) VALUES(2,8,2,0);
+INSERT INTO SCHEDULE([V#],[Slot#],[R#],[Date_of_Schedule],[Oncall]) VALUES(1,1,2,'2019-11-07',0);
+INSERT INTO SCHEDULE([V#],[Slot#],[R#],[Date_of_Schedule],[Oncall]) VALUES(1,3,1,'2019-11-07',0);
+INSERT INTO SCHEDULE([V#],[Slot#],[R#],[Date_of_Schedule],[Oncall]) VALUES(1,5,3,'2019-11-08',0);
+INSERT INTO SCHEDULE([V#],[Slot#],[R#],[Date_of_Schedule],[Oncall]) VALUES(1,6,2,'2019-11-08',0);
+INSERT INTO SCHEDULE([V#],[Slot#],[R#],[Date_of_Schedule],[Oncall]) VALUES(2,2,2,'2019-11-06',0);
+INSERT INTO SCHEDULE([V#],[Slot#],[R#],[Date_of_Schedule],[Oncall]) VALUES(2,4,1,'2019-11-08',1);
+INSERT INTO SCHEDULE([V#],[Slot#],[R#],[Date_of_Schedule],[Oncall]) VALUES(2,7,2,'2019-11-07',1);
+INSERT INTO SCHEDULE([V#],[Slot#],[R#],[Date_of_Schedule],[Oncall]) VALUES(2,8,2,'2019-11-07',0);
 
 
 
 
 --CALL_SCHEDULE data insert
-INSERT INTO CALL_SCHEDULE([Site#],[Fromm],[Too]) VALUES(10,'07:00:00','09:00:00');
-INSERT INTO CALL_SCHEDULE([Site#],[Fromm],[Too]) VALUES(15,'12:00:00','14:00:00');
-INSERT INTO CALL_SCHEDULE([Site#],[Fromm],[Too]) VALUES(11,'13:00:00','16:00:00');
-INSERT INTO CALL_SCHEDULE([Site#],[Fromm],[Too]) VALUES(2,'08:00:00','08:30:00');
-INSERT INTO CALL_SCHEDULE([Site#],[Fromm],[Too]) VALUES(23,'08:00:00','09:00:00');
-INSERT INTO CALL_SCHEDULE([Site#],[Fromm],[Too]) VALUES(12,'11:00:00','12:00:00');
-INSERT INTO CALL_SCHEDULE([Site#],[Fromm],[Too]) VALUES(6,'10:00:00','13:00:00');
+INSERT INTO CALL_SCHEDULE([V#],[Site#],[Fromm],[Too],[Date_of_Call_Schedule]) VALUES(1,10,'07:00:00','09:00:00','2019-11-07');
+INSERT INTO CALL_SCHEDULE([V#],[Site#],[Fromm],[Too],[Date_of_Call_Schedule]) VALUES(4,15,'12:00:00','14:00:00','2019-11-07');
+INSERT INTO CALL_SCHEDULE([V#],[Site#],[Fromm],[Too],[Date_of_Call_Schedule]) VALUES(2,11,'13:00:00','16:00:00','2019-11-07');
+INSERT INTO CALL_SCHEDULE([V#],[Site#],[Fromm],[Too],[Date_of_Call_Schedule]) VALUES(8,2,'08:00:00','08:30:00','2019-11-07');
+INSERT INTO CALL_SCHEDULE([V#],[Site#],[Fromm],[Too],[Date_of_Call_Schedule]) VALUES(6,23,'08:00:00','09:00:00','2019-11-07');
+INSERT INTO CALL_SCHEDULE([V#],[Site#],[Fromm],[Too],[Date_of_Call_Schedule]) VALUES(2,12,'11:00:00','12:00:00','2019-11-07');
+INSERT INTO CALL_SCHEDULE([V#],[Site#],[Fromm],[Too],[Date_of_Call_Schedule]) VALUES(3,6,'10:00:00','13:00:00','2019-11-07');
 
 
 --TREATMENT data insert
-INSERT INTO CALL_SCHEDULE([Date_of_Treatment],[V#],[A#],[Site#],[Treatment_Given]) VALUES('2019-10-07',5,11,19,'Antibiotics given');
-INSERT INTO CALL_SCHEDULE([Date_of_Treatment],[V#],[A#],[Site#],[Treatment_Given]) VALUES('2019-11-02',5,1,20,'Ambutated left rear foot');
-INSERT INTO CALL_SCHEDULE([Date_of_Treatment],[V#],[A#],[Site#],[Treatment_Given]) VALUES('2019-10-19',5,6,4,'Pain killers for next two weeks');
-INSERT INTO CALL_SCHEDULE([Date_of_Treatment],[V#],[A#],[Site#],[Treatment_Given]) VALUES('2019-10-25',5,15,15,'Therapy recommended');
-INSERT INTO CALL_SCHEDULE([Date_of_Treatment],[V#],[A#],[Site#],[Treatment_Given]) VALUES('2019-10-25',2,8,21,'Administered injection');
+INSERT INTO TREATMENT([Date_of_Treatment],[V#],[A#],[Site#],[Treatment_Given]) VALUES('2019-10-07',5,11,19,'Antibiotics given');
+INSERT INTO TREATMENT([Date_of_Treatment],[V#],[A#],[Site#],[Treatment_Given]) VALUES('2019-11-02',5,1,20,'Ambutated left rear foot');
+INSERT INTO TREATMENT([Date_of_Treatment],[V#],[A#],[Site#],[Treatment_Given]) VALUES('2019-10-19',5,6,4,'Pain killers for next two weeks');
+INSERT INTO TREATMENT([Date_of_Treatment],[V#],[A#],[Site#],[Treatment_Given]) VALUES('2019-10-25',5,15,15,'Therapy recommended');
+INSERT INTO TREATMENT([Date_of_Treatment],[V#],[A#],[Site#],[Treatment_Given]) VALUES('2019-10-25',2,8,21,'Administered injection');
 
 
 
+
+
+
+
+
+
+/*
+SELECT * FROM EMPLOYEE;
+SELECT * FROM ROOM;
+SELECT * FROM TIMESLOT;
+SELECT * FROM VET;
+SELECT * FROM SPECIALITY;
+SELECT * FROM SITE;
+SELECT * FROM VS;
+SELECT * FROM CLIENT;
+SELECT * FROM ANIMAL;
+SELECT * FROM SCHEDULE;
+SELECT * FROM CALL_SCHEDULE;
+SELECT * FROM TREATMENT;
+*/
 
 
 
