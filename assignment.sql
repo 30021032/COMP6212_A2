@@ -1,10 +1,18 @@
 use Lukas;
 
 /*
-DROP TABLE SPJ;
-DROP TABLE S;
-DROP TABLE P;
-DROP TABLE J;
+DROP TABLE TREATMENT;
+DROP TABLE CALL_SCHEDULE;
+DROP TABLE SCHEDULE;
+DROP TABLE ANIMAL;
+DROP TABLE CLIENT;
+DROP TABLE VS;
+DROP TABLE SITE;
+DROP TABLE SPECIALITY;
+DROP TABLE VET;
+DROP TABLE TIMESLOT;
+DROP TABLE ROOM;
+DROP TABLE EMPLOYEE;
 */
 
 
@@ -116,7 +124,7 @@ CREATE TABLE SCHEDULE (
 	V# int,
 	Slot# int,
 	R# int,
-	Oncall varchar(30),	--?
+	Oncall BIT,
  CONSTRAINT PK_Sch PRIMARY KEY(Sch#),
  CONSTRAINT FK_V_Sch FOREIGN KEY(V#) REFERENCES VET(V#),
  CONSTRAINT FK_Slot_Sch FOREIGN KEY(Slot#) REFERENCES TIMESLOT(Slot#),
@@ -151,3 +159,161 @@ CREATE TABLE TREATMENT (
  CONSTRAINT FK_V_T FOREIGN KEY(V#) REFERENCES VET(V#),
  CONSTRAINT FK_A_T FOREIGN KEY(A#) REFERENCES ANIMAL(A#),
  CONSTRAINT FK_Site_T FOREIGN KEY(Site#) REFERENCES SITE(Site#));
+
+
+
+
+
+
+
+
+--EMPLOYEE data insert
+INSERT INTO EMPLOYEE([E_Firstname],[E_Surname],[StreetNo],[StreetName],[Suburb]) VALUES('Arthur','Goff','61','Elit, St.','Austin');
+INSERT INTO EMPLOYEE([E_Firstname],[E_Surname],[StreetNo],[StreetName],[Suburb]) VALUES('Acton','Silva','29','Maecenas Rd.','Aosta');
+INSERT INTO EMPLOYEE([E_Firstname],[E_Surname],[StreetNo],[StreetName],[Suburb]) VALUES('Yuli','Calhoun','74','Venenatis St.','Baiso');
+INSERT INTO EMPLOYEE([E_Firstname],[E_Surname],[StreetNo],[StreetName],[Suburb]) VALUES('Callie','Roth','75','Ullamcorper Street','Nashville');
+INSERT INTO EMPLOYEE([E_Firstname],[E_Surname],[StreetNo],[StreetName],[Suburb]) VALUES('Tarik','Landry','100','Sed, Street','Chépica');
+INSERT INTO EMPLOYEE([E_Firstname],[E_Surname],[StreetNo],[StreetName],[Suburb]) VALUES('Stacey','Salas','130','Justo Road','Llanidloes');
+INSERT INTO EMPLOYEE([E_Firstname],[E_Surname],[StreetNo],[StreetName],[Suburb]) VALUES('Rahim','Yang','113','Ultrices St.','Bhusawal');
+INSERT INTO EMPLOYEE([E_Firstname],[E_Surname],[StreetNo],[StreetName],[Suburb]) VALUES('Iris','Snyder','99','Ornare, Avenue','Koszalin');
+INSERT INTO EMPLOYEE([E_Firstname],[E_Surname],[StreetNo],[StreetName],[Suburb]) VALUES('Rashad','Baker','54','Neque Rd.','Chimbarongo');
+INSERT INTO EMPLOYEE([E_Firstname],[E_Surname],[StreetNo],[StreetName],[Suburb]) VALUES('Abra','Hinton','127','Fermentum Avenue','Chantemelle');
+
+
+
+--ROOM data insert
+INSERT INTO ROOM([RoomName]) VALUES('Red Room');
+INSERT INTO ROOM([RoomName]) VALUES('X-Ray');
+INSERT INTO ROOM([RoomName]) VALUES('Treatment Room 1');
+INSERT INTO ROOM([RoomName]) VALUES('Treatment Room 2');
+
+
+
+--TIMESLOT data insert
+INSERT INTO TIMESLOT([Fromm],[Too]) VALUES('07:00:00', '07:30:00');
+INSERT INTO TIMESLOT([Fromm],[Too]) VALUES('07:45:00', '08:15:00');
+INSERT INTO TIMESLOT([Fromm],[Too]) VALUES('08:30:00', '09:00:00');
+INSERT INTO TIMESLOT([Fromm],[Too]) VALUES('09:15:00', '09:45:00');
+INSERT INTO TIMESLOT([Fromm],[Too]) VALUES('10:00:00', '10:30:00');
+INSERT INTO TIMESLOT([Fromm],[Too]) VALUES('10:45:00', '11:15:00');
+INSERT INTO TIMESLOT([Fromm],[Too]) VALUES('11:30:00', '12:00:00');
+INSERT INTO TIMESLOT([Fromm],[Too]) VALUES('12:15:00', '12:45:00');
+
+
+
+--VET data insert
+INSERT INTO VET([V_Firstname],[V_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Ferdinand','Cobb','91','Venenatis Rd.','Devizes','1694111035599');
+INSERT INTO VET([V_Firstname],[V_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Bevis','Fields','18','Accumsan St.','Solihull','1623041589899');
+INSERT INTO VET([V_Firstname],[V_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Harlan','Estes','90','Ligula. Rd.','SŽlange','1685021802299');
+INSERT INTO VET([V_Firstname],[V_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Luke','Howard','12','Phasellus Rd.','Gaggio Montano','1674032563399');
+INSERT INTO VET([V_Firstname],[V_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Nero','Rutledge','122','Accumsan Rd.','Rankweil','1633031790399');
+INSERT INTO VET([V_Firstname],[V_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Madison','Valentine','95','Molestie Road','Thane','1617071402699');
+INSERT INTO VET([V_Firstname],[V_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Winter','Copeland','120','Phasellus Rd.','Ancona','1643102355199');
+INSERT INTO VET([V_Firstname],[V_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Cadman','Vinson','10','Parturient Rd.','Çeşme','1645060648799');
+
+
+
+--SPECIALITY data insert
+INSERT INTO SPECIALITY([Description]) VALUES('Anaesthesiology');
+INSERT INTO SPECIALITY([Description]) VALUES('Cardiology');
+INSERT INTO SPECIALITY([Description]) VALUES('Dentistry');
+INSERT INTO SPECIALITY([Description]) VALUES('Internal medicine');
+INSERT INTO SPECIALITY([Description]) VALUES('Porcine');
+INSERT INTO SPECIALITY([Description]) VALUES('Preventive medicine');
+
+
+
+
+
+--SITE data insert
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','25','Ipsum Street','Farciennes');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','15','Mollis Ave','Diets-Heur');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Clinic','39','Scelerisque Street','Vichy');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','143','Lorem St.','Aydın');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','17','Vehicula St.','Dilsen-Stokkem');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','3','Ornare St.','Roux-Miroir');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','113','Mauris Rd.','Chiny');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Clinic','124','Sit St.','Coleville Lake');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','97','Iaculis St.','Olivar');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','49','Magna. Av.','Gresham');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','39','Faucibus Rd.','Coinco');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','118','Nam Rd.','Leffinge');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','87','Ac St.','Baie-Comeau');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','38','Tristique Rd.','Kingston-on-Thames');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','143','Ante St.','Omaha');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','121','Nulla Avenue','Ruddervoorde');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','53','Diam. Av.','Castelbianco');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Clinic','24','Vestibulum, Street','Orsogna');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','112','Tristique St.','Wichita');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','138','Nunc Street','Osgoode');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','70','Vulputate, St.','Coquimbo');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','98','Mauris Rd.','Bonnyville Municipal District');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Clinic','90','Non Rd.','Stalhille');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Clinic','70','Egestas Avenue','Gdańsk');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Clinic','67','Sit St.','Baunatal');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','146','At Rd.','Kilwinning');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','54','In Road','Salzwedel');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Clinic','59','Nam Ave','Jerez de la Frontera');
+INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','90','Pulvinar Rd.','Reutlingen');
+
+
+
+--VS data insert
+INSERT INTO VS([V#],[SP#]) VALUES(1,1);
+INSERT INTO VS([V#],[SP#]) VALUES(2,4);
+INSERT INTO VS([V#],[SP#]) VALUES(2,5);
+INSERT INTO VS([V#],[SP#]) VALUES(3,3);
+INSERT INTO VS([V#],[SP#]) VALUES(4,5);
+INSERT INTO VS([V#],[SP#]) VALUES(5,6);
+INSERT INTO VS([V#],[SP#]) VALUES(6,2);
+INSERT INTO VS([V#],[SP#]) VALUES(7,5);
+INSERT INTO VS([V#],[SP#]) VALUES(8,4);
+
+
+
+--CLIENT data insert
+INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Blaze','Nolan','102','Dapibus Street','Town of Yarmouth','1650100273799');
+INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Ashely','Hooper','58','Nam Rd.','Zeebrugge','1659100177999');
+INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Rhona','Shepherd','51','Adipiscing Rd.','Compiano','1662121092499');
+INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Ferdinand','Oneal','132','Cursus Avenue','Heidenheim','1612112135099');
+INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Kameko','Pena','74','Euismod St.','Alto del Carmen','1664092578499');
+INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Chadwick','Ortega','95','Sapien. St.','Plainevaux','1653021115299');
+INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Davis','Flynn','140','Euismod Street','Brescia','1676071947399');
+INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Cain','Marquez','144','In Av.','Tredegar','1683012204399');
+INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Axel','Miller','33','Urna Rd.','Orsogna','1669020400199');
+INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Ramona','Munoz','88','Augue Ave','Katowice','1602122749699');
+INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Conan','Howe','139','Aliquet Av.','Kapolei','1669022610699');
+INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Keegan','Love','58','Amet Av.','Turriaco','1630080806199');
+INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Donovan','Floyd','128','Integer Road','Miami','1663011549799');
+INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Scarlett','Mcclure','27','Amet Road','Moose Jaw','1647070745699');
+INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Rylee','Mullen','46','Habitant Road','Ruisbroek','1672120518699');
+INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Montana','Fuentes','25','Dui, Rd.','Jerez de la Frontera','1685091201799');
+INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Camilla','Tillman','45','Eget, Road','Brodick','1605061184199');
+INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Perry','Walters','81','Odio. Av.','Sandy','1623102475899');
+INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Yardley','Hebert','63','Tristique Av.','Jonesboro','1642080338499');
+INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[ContactNo]) VALUES('Michelle','Waters','127','Interdum. Ave','Wepion','1665061934499');
+
+
+
+--ANIMAL
+INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Cedric',1);
+INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Slade',7);
+INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Carla',16);
+INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Julie',20);
+INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Cailin',14);
+INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Gemma',14);
+INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Jakeem',14);
+INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Lillith',6);
+INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Doris',15);
+INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Gannon',1);
+INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Keane',14);
+INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Urielle',13);
+INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Ivan',6);
+INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Burke',18);
+INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Eleanor',2);
+INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Rhona',17);
+INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Bradley',2);
+INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Remedios',10);
+
+
+
