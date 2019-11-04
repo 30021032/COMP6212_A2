@@ -1,3 +1,4 @@
+--CREATE DATABASE Lukas;
 use Lukas;
 
 /*
@@ -42,8 +43,7 @@ CREATE TABLE TIMESLOT(
 Slot# int IDENTITY(1,1),
 Fromm TIME(0),
 Too TIME(0),
-CONSTRAINT PK_Slot# PRIMARY KEY(Slot#)
-);
+CONSTRAINT PK_Slot# PRIMARY KEY(Slot#));
 
 
 --VET (V#, V_Firstname, V_Surname, StreetNo, StreetName, Suburb, ContactNo)
@@ -56,8 +56,7 @@ StreetNo varchar(10),
 StreetName varchar(50),
 Suburb varchar(50),
 ContactNo varchar(35),
-CONSTRAINT PK_V PRIMARY KEY(V#)
-);
+CONSTRAINT PK_V PRIMARY KEY(V#));
 
 
 --SPECIALITY(SP#, Description)
@@ -65,8 +64,7 @@ CONSTRAINT PK_V PRIMARY KEY(V#)
 CREATE TABLE SPECIALITY(
 SP# int IDENTITY(1,1),
 Description varchar(200),
-CONSTRAINT PK_SP PRIMARY KEY(SP#)
-);
+CONSTRAINT PK_SP PRIMARY KEY(SP#));
 
 --SITE(Site#, SiteType, StreetNo, StreetName, Suburb)
 --PK- Site#
@@ -76,8 +74,7 @@ SiteType varchar(25),
 StreetNo varchar(10),
 StreetName varchar(50),
 Suburb varchar(50),
-CONSTRAINT PK_Site PRIMARY KEY(Site#)
-);
+CONSTRAINT PK_Site PRIMARY KEY(Site#));
 
 
 --VS (V#, SP#)
@@ -87,8 +84,8 @@ CREATE TABLE VS (
 	V# int,
 	SP# int,
  CONSTRAINT PK_VSP PRIMARY KEY(V#,SP#),
- CONSTRAINT FK_V_VSP FOREIGN KEY(V#) REFERENCES VET(V#),
- CONSTRAINT FK_SP_VSP FOREIGN KEY(SP#) REFERENCES SPECIALITY(SP#));
+ CONSTRAINT FK_V_VSP FOREIGN KEY(V#) REFERENCES VET(V#) ON DELETE CASCADE ON UPDATE CASCADE,
+ CONSTRAINT FK_SP_VSP FOREIGN KEY(SP#) REFERENCES SPECIALITY(SP#) ON DELETE CASCADE ON UPDATE CASCADE);
 
 
 --CLIENT(C#, C_Firstname, C_Surname, StreetNo, StreetName, Suburb, ContactNo)
@@ -112,7 +109,7 @@ CREATE TABLE ANIMAL (
 	AName# varchar(60),
 	C# int,
  CONSTRAINT PK_A PRIMARY KEY(A#),
- CONSTRAINT FK_C_A FOREIGN KEY(C#) REFERENCES CLIENT(C#));
+ CONSTRAINT FK_C_A FOREIGN KEY(C#) REFERENCES CLIENT(C#) ON DELETE CASCADE ON UPDATE CASCADE);
 
 
 --SCHEDULE(Sch#, V#, Slot#, R#,Oncall)
@@ -126,9 +123,9 @@ CREATE TABLE SCHEDULE (
 	R# int,
 	Oncall BIT,
  CONSTRAINT PK_Sch PRIMARY KEY(Sch#),
- CONSTRAINT FK_V_Sch FOREIGN KEY(V#) REFERENCES VET(V#),
- CONSTRAINT FK_Slot_Sch FOREIGN KEY(Slot#) REFERENCES TIMESLOT(Slot#),
- CONSTRAINT FK_R_Sch FOREIGN KEY(R#) REFERENCES ROOM(R#));
+ CONSTRAINT FK_V_Sch FOREIGN KEY(V#) REFERENCES VET(V#) ON DELETE CASCADE ON UPDATE CASCADE,
+ CONSTRAINT FK_Slot_Sch FOREIGN KEY(Slot#) REFERENCES TIMESLOT(Slot#) ON DELETE CASCADE ON UPDATE CASCADE,
+ CONSTRAINT FK_R_Sch FOREIGN KEY(R#) REFERENCES ROOM(R#) ON DELETE CASCADE ON UPDATE CASCADE);
 
 
 --CALL_SCHEDULE (V#, Site#, From, To)
@@ -140,8 +137,8 @@ CREATE TABLE CALL_SCHEDULE (
 	Fromm TIME(0),
 	Too TIME(0),
  CONSTRAINT PK_VSite PRIMARY KEY(V#, Site#),
- CONSTRAINT FK_V_VSite FOREIGN KEY(V#) REFERENCES VET(V#),
- CONSTRAINT FK_Site_VSite FOREIGN KEY(Site#) REFERENCES SITE(Site#));
+ CONSTRAINT FK_V_VSite FOREIGN KEY(V#) REFERENCES VET(V#) ON DELETE CASCADE ON UPDATE CASCADE,
+ CONSTRAINT FK_Site_VSite FOREIGN KEY(Site#) REFERENCES SITE(Site#) ON DELETE CASCADE ON UPDATE CASCADE);
 
 
 --TREATMENT(T#, Date_of_Treatment, V#, A#, Site#, Treatment_Given)
@@ -156,9 +153,9 @@ CREATE TABLE TREATMENT (
 	Site# int,
 	Treatment_Given varchar(200),
  CONSTRAINT PK_T PRIMARY KEY(T#),
- CONSTRAINT FK_V_T FOREIGN KEY(V#) REFERENCES VET(V#),
- CONSTRAINT FK_A_T FOREIGN KEY(A#) REFERENCES ANIMAL(A#),
- CONSTRAINT FK_Site_T FOREIGN KEY(Site#) REFERENCES SITE(Site#));
+ CONSTRAINT FK_V_T FOREIGN KEY(V#) REFERENCES VET(V#) ON DELETE CASCADE ON UPDATE CASCADE,
+ CONSTRAINT FK_A_T FOREIGN KEY(A#) REFERENCES ANIMAL(A#) ON DELETE CASCADE ON UPDATE CASCADE,
+ CONSTRAINT FK_Site_T FOREIGN KEY(Site#) REFERENCES SITE(Site#) ON DELETE CASCADE ON UPDATE CASCADE);
 
 
 
@@ -186,6 +183,7 @@ INSERT INTO ROOM([RoomName]) VALUES('Red Room');
 INSERT INTO ROOM([RoomName]) VALUES('X-Ray');
 INSERT INTO ROOM([RoomName]) VALUES('Treatment Room 1');
 INSERT INTO ROOM([RoomName]) VALUES('Treatment Room 2');
+INSERT INTO ROOM([RoomName]) VALUES('Treatment Room 3');
 
 
 
@@ -226,35 +224,35 @@ INSERT INTO SPECIALITY([Description]) VALUES('Preventive medicine');
 
 
 --SITE data insert
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','25','Ipsum Street','Farciennes');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','15','Mollis Ave','Diets-Heur');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Clinic','39','Scelerisque Street','Vichy');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','143','Lorem St.','Aydın');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','17','Vehicula St.','Dilsen-Stokkem');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','3','Ornare St.','Roux-Miroir');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','113','Mauris Rd.','Chiny');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Clinic','124','Sit St.','Coleville Lake');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','97','Iaculis St.','Olivar');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','49','Magna. Av.','Gresham');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','39','Faucibus Rd.','Coinco');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','118','Nam Rd.','Leffinge');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','87','Ac St.','Baie-Comeau');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','38','Tristique Rd.','Kingston-on-Thames');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','143','Ante St.','Omaha');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','121','Nulla Avenue','Ruddervoorde');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','53','Diam. Av.','Castelbianco');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Clinic','24','Vestibulum, Street','Orsogna');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','112','Tristique St.','Wichita');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','138','Nunc Street','Osgoode');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','70','Vulputate, St.','Coquimbo');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','98','Mauris Rd.','Bonnyville Municipal District');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Clinic','90','Non Rd.','Stalhille');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Clinic','70','Egestas Avenue','Gdańsk');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Clinic','67','Sit St.','Baunatal');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','146','At Rd.','Kilwinning');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','54','In Road','Salzwedel');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Clinic','59','Nam Ave','Jerez de la Frontera');
-INSERT INTO VET([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','90','Pulvinar Rd.','Reutlingen');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','25','Ipsum Street','Farciennes');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','15','Mollis Ave','Diets-Heur');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Clinic','39','Scelerisque Street','Vichy');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','143','Lorem St.','Aydın');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','17','Vehicula St.','Dilsen-Stokkem');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','3','Ornare St.','Roux-Miroir');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','113','Mauris Rd.','Chiny');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Clinic','124','Sit St.','Coleville Lake');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','97','Iaculis St.','Olivar');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','49','Magna. Av.','Gresham');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','39','Faucibus Rd.','Coinco');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','118','Nam Rd.','Leffinge');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','87','Ac St.','Baie-Comeau');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','38','Tristique Rd.','Kingston-on-Thames');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','143','Ante St.','Omaha');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','121','Nulla Avenue','Ruddervoorde');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','53','Diam. Av.','Castelbianco');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Clinic','24','Vestibulum, Street','Orsogna');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','112','Tristique St.','Wichita');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','138','Nunc Street','Osgoode');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','70','Vulputate, St.','Coquimbo');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Farm','98','Mauris Rd.','Bonnyville Municipal District');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Clinic','90','Non Rd.','Stalhille');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Clinic','70','Egestas Avenue','Gdańsk');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Clinic','67','Sit St.','Baunatal');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','146','At Rd.','Kilwinning');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','54','In Road','Salzwedel');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('Clinic','59','Nam Ave','Jerez de la Frontera');
+INSERT INTO SITE([SiteType],[StreetNo],[StreetName],[Suburb]) VALUES('House','90','Pulvinar Rd.','Reutlingen');
 
 
 
@@ -295,7 +293,7 @@ INSERT INTO VET([C_Firstname],[C_Surname],[StreetNo],[StreetName],[Suburb],[Cont
 
 
 
---ANIMAL
+--ANIMAL data insert
 INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Cedric',1);
 INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Slade',7);
 INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Carla',16);
@@ -314,6 +312,40 @@ INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Eleanor',2);
 INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Rhona',17);
 INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Bradley',2);
 INSERT INTO ANIMAL([C_Firstname],[C#]) VALUES('Remedios',10);
+
+
+--SCHEDULE data insert
+INSERT INTO SCHEDULE([V#],[Slot#],[R#],[Oncall]) VALUES(1,1,2,0);
+INSERT INTO SCHEDULE([V#],[Slot#],[R#],[Oncall]) VALUES(1,3,1,0);
+INSERT INTO SCHEDULE([V#],[Slot#],[R#],[Oncall]) VALUES(1,5,3,0);
+INSERT INTO SCHEDULE([V#],[Slot#],[R#],[Oncall]) VALUES(1,6,2,0);
+INSERT INTO SCHEDULE([V#],[Slot#],[R#],[Oncall]) VALUES(2,2,2,0);
+INSERT INTO SCHEDULE([V#],[Slot#],[R#],[Oncall]) VALUES(2,4,1,1);
+INSERT INTO SCHEDULE([V#],[Slot#],[R#],[Oncall]) VALUES(2,7,2,1);
+INSERT INTO SCHEDULE([V#],[Slot#],[R#],[Oncall]) VALUES(2,8,2,0);
+
+
+
+
+--CALL_SCHEDULE data insert
+INSERT INTO CALL_SCHEDULE([Site#],[Fromm],[Too]) VALUES(10,'07:00:00','09:00:00');
+INSERT INTO CALL_SCHEDULE([Site#],[Fromm],[Too]) VALUES(15,'12:00:00','14:00:00');
+INSERT INTO CALL_SCHEDULE([Site#],[Fromm],[Too]) VALUES(11,'13:00:00','16:00:00');
+INSERT INTO CALL_SCHEDULE([Site#],[Fromm],[Too]) VALUES(2,'08:00:00','08:30:00');
+INSERT INTO CALL_SCHEDULE([Site#],[Fromm],[Too]) VALUES(23,'08:00:00','09:00:00');
+INSERT INTO CALL_SCHEDULE([Site#],[Fromm],[Too]) VALUES(12,'11:00:00','12:00:00');
+INSERT INTO CALL_SCHEDULE([Site#],[Fromm],[Too]) VALUES(6,'10:00:00','13:00:00');
+
+
+--TREATMENT data insert
+INSERT INTO CALL_SCHEDULE([Date_of_Treatment],[V#],[A#],[Site#],[Treatment_Given]) VALUES('2019-10-07',5,11,19,'Antibiotics given');
+INSERT INTO CALL_SCHEDULE([Date_of_Treatment],[V#],[A#],[Site#],[Treatment_Given]) VALUES('2019-11-02',5,1,20,'Ambutated left rear foot');
+INSERT INTO CALL_SCHEDULE([Date_of_Treatment],[V#],[A#],[Site#],[Treatment_Given]) VALUES('2019-10-19',5,6,4,'Pain killers for next two weeks');
+INSERT INTO CALL_SCHEDULE([Date_of_Treatment],[V#],[A#],[Site#],[Treatment_Given]) VALUES('2019-10-25',5,15,15,'Therapy recommended');
+INSERT INTO CALL_SCHEDULE([Date_of_Treatment],[V#],[A#],[Site#],[Treatment_Given]) VALUES('2019-10-25',2,8,21,'Administered injection');
+
+
+
 
 
 
