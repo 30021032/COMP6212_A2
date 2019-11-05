@@ -10,7 +10,7 @@
         <IntegratedSecurity>true</IntegratedSecurity>
       </ConnectionProperties>
       <rd:SecurityType>Integrated</rd:SecurityType>
-      <rd:DataSourceID>9ed1b8f3-09d4-43c6-93ba-b938738f7114</rd:DataSourceID>
+      <rd:DataSourceID>90f10f40-3306-4f22-9d04-86c26eca7724</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
@@ -18,26 +18,36 @@
       <Query>
         <DataSourceName>Client_Animal</DataSourceName>
         <CommandText>SELECT
-  CLIENT.C_Firstname
+  ANIMAL.AName#
+  ,CLIENT.C_Firstname
   ,CLIENT.C_Surname
-  ,ANIMAL.AName#
+  ,TREATMENT.Treatment_Given
 FROM
-  CLIENT
-  INNER JOIN ANIMAL
-    ON CLIENT.C# = ANIMAL.C#</CommandText>
+  ANIMAL
+  INNER JOIN CLIENT
+    ON ANIMAL.C# = CLIENT.C#
+  INNER JOIN TREATMENT
+    ON ANIMAL.A# = TREATMENT.A#</CommandText>
         <rd:DesignerState>
           <QueryDefinition xmlns="http://schemas.microsoft.com/ReportingServices/QueryDefinition/Relational">
             <SelectedColumns>
+              <ColumnExpression ColumnOwner="ANIMAL" ColumnName="AName#" />
               <ColumnExpression ColumnOwner="CLIENT" ColumnName="C_Firstname" />
               <ColumnExpression ColumnOwner="CLIENT" ColumnName="C_Surname" />
-              <ColumnExpression ColumnOwner="ANIMAL" ColumnName="AName#" />
+              <ColumnExpression ColumnOwner="TREATMENT" ColumnName="Treatment_Given" />
             </SelectedColumns>
             <Joins>
-              <Join Type="CROSS JOIN" ColumnOwner="CLIENT" />
-              <Join Type="INNER JOIN" ColumnOwner="ANIMAL">
+              <Join Type="CROSS JOIN" ColumnOwner="ANIMAL" />
+              <Join Type="INNER JOIN" ColumnOwner="CLIENT">
                 <On>
-                  <From ColumnOwner="CLIENT" ColumnName="C#" />
-                  <To ColumnOwner="ANIMAL" ColumnName="C#" />
+                  <From ColumnOwner="ANIMAL" ColumnName="C#" />
+                  <To ColumnOwner="CLIENT" ColumnName="C#" />
+                </On>
+              </Join>
+              <Join Type="INNER JOIN" ColumnOwner="TREATMENT">
+                <On>
+                  <From ColumnOwner="ANIMAL" ColumnName="A#" />
+                  <To ColumnOwner="TREATMENT" ColumnName="A#" />
                 </On>
               </Join>
             </Joins>
@@ -45,6 +55,10 @@ FROM
         </rd:DesignerState>
       </Query>
       <Fields>
+        <Field Name="AName_">
+          <DataField>AName#</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="C_Firstname">
           <DataField>C_Firstname</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -53,8 +67,8 @@ FROM
           <DataField>C_Surname</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="AName_">
-          <DataField>AName#</DataField>
+        <Field Name="Treatment_Given">
+          <DataField>Treatment_Given</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
@@ -68,18 +82,21 @@ FROM
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>31.70278mm</Width>
+                  <Width>33.27135mm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>34.08403mm</Width>
+                  <Width>33.27135mm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>65.18195mm</Width>
+                  <Width>39.88594mm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>68.72552mm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>8.11667mm</Height>
+                  <Height>6mm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -99,7 +116,7 @@ FROM
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -120,49 +137,10 @@ FROM
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <ColSpan>2</ColSpan>
                       </CellContents>
                     </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox3">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style>
-                                    <FontSize>11pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                    <Color>#666666</Color>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Right</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox3</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Style>None</Style>
-                            </Border>
-                            <BottomBorder>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                              <Width>1pt</Width>
-                            </BottomBorder>
-                            <BackgroundColor>White</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
+                    <TablixCell />
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox5">
@@ -204,10 +182,51 @@ FROM
                         </Textbox>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox7">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Treatment Given</Value>
+                                  <Style>
+                                    <FontSize>11pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>#666666</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox7</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                              <Width>1pt</Width>
+                            </BottomBorder>
+                            <BackgroundColor>White</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>8.11667mm</Height>
+                  <Height>6mm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -258,9 +277,7 @@ FROM
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style>
-                                <TextAlign>Left</TextAlign>
-                              </Style>
+                              <Style />
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>C_Surname</rd:DefaultName>
@@ -312,12 +329,48 @@ FROM
                         </Textbox>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Treatment_Given">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Treatment_Given.Value</Value>
+                                  <Style>
+                                    <FontWeight>Normal</FontWeight>
+                                    <Color>#333333</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Treatment_Given</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BackgroundColor>White</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
               </TablixRows>
             </TablixBody>
             <TablixColumnHierarchy>
               <TablixMembers>
+                <TablixMember />
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
@@ -334,10 +387,10 @@ FROM
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet1</DataSetName>
-            <Top>17.19792mm</Top>
-            <Left>3.175mm</Left>
-            <Height>16.23333mm</Height>
-            <Width>130.96875mm</Width>
+            <Top>16.93333mm</Top>
+            <Left>6.61458mm</Left>
+            <Height>12mm</Height>
+            <Width>175.15417mm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -351,7 +404,7 @@ FROM
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Clients and their Animals </Value>
+                    <Value>Clients, Animals and Treatment</Value>
                     <Style>
                       <FontFamily>Segoe UI Light</FontFamily>
                       <FontSize>28pt</FontSize>
@@ -385,7 +438,7 @@ FROM
           </Border>
         </Style>
       </Body>
-      <Width>152.4mm</Width>
+      <Width>189.70624mm</Width>
       <Page>
         <PageFooter>
           <Height>11.43mm</Height>
@@ -448,5 +501,5 @@ FROM
     </GridLayoutDefinition>
   </ReportParametersLayout>
   <rd:ReportUnitType>Mm</rd:ReportUnitType>
-  <rd:ReportID>2631d093-faff-49b7-8e39-1efb987f0c7a</rd:ReportID>
+  <rd:ReportID>5d2af469-8393-4c3b-b882-17af21c5116a</rd:ReportID>
 </Report>
