@@ -24,11 +24,11 @@ DROP TABLE EMPLOYEE;
 --PK- E#
 CREATE TABLE EMPLOYEE(
 E# int IDENTITY(1,1),
-E_Firstname varchar(40),
-E_Surname varchar(40),
-StreetNo varchar(10),
-StreetName varchar(50),
-Suburb varchar(50),
+E_Firstname varchar(40) NOT NULL,
+E_Surname varchar(40) NOT NULL,
+StreetNo varchar(10) NOT NULL,
+StreetName varchar(50) NOT NULL,
+Suburb varchar(50) NOT NULL,
 CONSTRAINT PK_E PRIMARY KEY(E#));
 
 
@@ -36,7 +36,7 @@ CONSTRAINT PK_E PRIMARY KEY(E#));
 --PK- R#
 CREATE TABLE ROOM(
 R# int IDENTITY(1,1),
-RoomName varchar(30),
+RoomName varchar(30) NOT NULL,
 CONSTRAINT PK_R PRIMARY KEY(R#));
 
 
@@ -44,8 +44,8 @@ CONSTRAINT PK_R PRIMARY KEY(R#));
 --PK- Slot#
 CREATE TABLE TIMESLOT(
 Slot# int IDENTITY(1,1),
-Fromm TIME(0),
-Too TIME(0),
+Fromm TIME(0) NOT NULL,
+Too TIME(0) NOT NULL,
 CONSTRAINT PK_Slot# PRIMARY KEY(Slot#));
 
 
@@ -53,12 +53,12 @@ CONSTRAINT PK_Slot# PRIMARY KEY(Slot#));
 --PK- V#
 CREATE TABLE VET(
 V# int IDENTITY(1,1),
-V_Firstname varchar(40),
-V_Surname varchar(40),
-StreetNo varchar(10),
-StreetName varchar(50),
-Suburb varchar(50),
-ContactNo varchar(35),
+V_Firstname varchar(40) NOT NULL,
+V_Surname varchar(40) NOT NULL,
+StreetNo varchar(10) NOT NULL,
+StreetName varchar(50) NOT NULL,
+Suburb varchar(50) NOT NULL,
+ContactNo varchar(35) NOT NULL,
 CONSTRAINT PK_V PRIMARY KEY(V#));
 
 
@@ -66,17 +66,17 @@ CONSTRAINT PK_V PRIMARY KEY(V#));
 --PK- SP#
 CREATE TABLE SPECIALITY(
 SP# int IDENTITY(1,1),
-Description varchar(200),
+Description varchar(200) NOT NULL,
 CONSTRAINT PK_SP PRIMARY KEY(SP#));
 
 --SITE(Site#, SiteType, StreetNo, StreetName, Suburb)
 --PK- Site#
 CREATE TABLE SITE(
 Site# int IDENTITY(1,1),
-SiteType varchar(25),
-StreetNo varchar(10),
-StreetName varchar(50),
-Suburb varchar(50),
+SiteType varchar(25) NOT NULL,
+StreetNo varchar(10) NOT NULL,
+StreetName varchar(50) NOT NULL,
+Suburb varchar(50) NOT NULL,
 CONSTRAINT PK_Site PRIMARY KEY(Site#));
 
 
@@ -84,8 +84,8 @@ CONSTRAINT PK_Site PRIMARY KEY(Site#));
 --PK � (V#, SP#) � composite key
 --FK � V#, and SP#
 CREATE TABLE VS (
-	V# int,
-	SP# int,
+	V# int NOT NULL,
+	SP# int NOT NULL,
  CONSTRAINT PK_VSP PRIMARY KEY(V#,SP#),
  CONSTRAINT FK_V_VSP FOREIGN KEY(V#) REFERENCES VET(V#) ON DELETE CASCADE ON UPDATE CASCADE,
  CONSTRAINT FK_SP_VSP FOREIGN KEY(SP#) REFERENCES SPECIALITY(SP#) ON DELETE CASCADE ON UPDATE CASCADE);
@@ -95,12 +95,12 @@ CREATE TABLE VS (
 --PK- C#
 CREATE TABLE CLIENT(
 C# int IDENTITY(1,1),
-C_Firstname varchar(40),
-C_Surname varchar(40),
-StreetNo varchar(10),
-StreetName varchar(50),
-Suburb varchar(50),
-ContactNo varchar(35),
+C_Firstname varchar(40) NOT NULL,
+C_Surname varchar(40) NOT NULL,
+StreetNo varchar(10) NOT NULL,
+StreetName varchar(50) NOT NULL,
+Suburb varchar(50) NOT NULL,
+ContactNo varchar(35) NOT NULL,
 CONSTRAINT PK_C PRIMARY KEY(C#));
 
 
@@ -109,7 +109,7 @@ CONSTRAINT PK_C PRIMARY KEY(C#));
 --FK � C#
 CREATE TABLE ANIMAL (
 	A# int IDENTITY(1,1),
-	AName# varchar(60),
+	AName# varchar(60) NOT NULL,
 	C# int,
  CONSTRAINT PK_A PRIMARY KEY(A#),
  CONSTRAINT FK_C_A FOREIGN KEY(C#) REFERENCES CLIENT(C#) ON DELETE CASCADE ON UPDATE CASCADE);
@@ -124,8 +124,8 @@ CREATE TABLE SCHEDULE (
 	V# int,
 	Slot# int,
 	R# int,
-	Date_of_Schedule date,
-	Oncall BIT,
+	Date_of_Schedule date NOT NULL,
+	Oncall BIT NOT NULL,
  CONSTRAINT PK_Sch PRIMARY KEY(Sch#),
  CONSTRAINT FK_V_Sch FOREIGN KEY(V#) REFERENCES VET(V#) ON DELETE CASCADE ON UPDATE CASCADE,
  CONSTRAINT FK_Slot_Sch FOREIGN KEY(Slot#) REFERENCES TIMESLOT(Slot#) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -136,11 +136,11 @@ CREATE TABLE SCHEDULE (
 --PK � (V#, Site#) � composite key
 --FK � V#, and Site#
 CREATE TABLE CALL_SCHEDULE (
-	V# int,
-	Site# int,
-	Fromm TIME(0),
-	Too TIME(0),
-	Date_of_Call_Schedule date,
+	V# int NOT NULL,
+	Site# int NOT NULL,
+	Fromm TIME(0) NOT NULL,
+	Too TIME(0) NOT NULL,
+	Date_of_Call_Schedule date NOT NULL,
  CONSTRAINT PK_VSite PRIMARY KEY(V#, Site#),
  CONSTRAINT FK_V_VSite FOREIGN KEY(V#) REFERENCES VET(V#) ON DELETE CASCADE ON UPDATE CASCADE,
  CONSTRAINT FK_Site_VSite FOREIGN KEY(Site#) REFERENCES SITE(Site#) ON DELETE CASCADE ON UPDATE CASCADE);
@@ -152,16 +152,31 @@ CREATE TABLE CALL_SCHEDULE (
 --FK � V#, A# and Site#
 CREATE TABLE TREATMENT (
 	T# int IDENTITY(1,1),
-	Date_of_Treatment date,
-	V# int,
-	A# int,
+	Date_of_Treatment date NOT NULL,
+	V# int NOT NULL,
+	A# int NOT NULL,
 	Site# int,
-	Treatment_Given varchar(200),
+	Treatment_Given varchar(200) NOT NULL,
  CONSTRAINT PK_T PRIMARY KEY(T#),
  CONSTRAINT FK_V_T FOREIGN KEY(V#) REFERENCES VET(V#) ON DELETE CASCADE ON UPDATE CASCADE,
  CONSTRAINT FK_A_T FOREIGN KEY(A#) REFERENCES ANIMAL(A#) ON DELETE CASCADE ON UPDATE CASCADE,
  CONSTRAINT FK_Site_T FOREIGN KEY(Site#) REFERENCES SITE(Site#) ON DELETE CASCADE ON UPDATE CASCADE);
 
+
+
+
+ --INDEXES
+CREATE INDEX ind_EMP_Fn_Ln
+ON EMPLOYEE (E_Firstname, E_Surname);
+
+CREATE INDEX ind_VET_Fn_Ln
+ON VET (V_Firstname, V_Surname);
+
+CREATE INDEX ind_CLI_Fn_Ln
+ON CLIENT (C_Firstname, C_Surname);
+
+CREATE INDEX ind_ANI_A#_Nme
+ON ANIMAL (A#, AName#);
 
 
 
